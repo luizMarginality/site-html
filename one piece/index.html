@@ -15,28 +15,32 @@
       font-family:'Poppins',sans-serif;
     }
 
-    body{
-      min-height:100vh;
-      color:white;
-      overflow-x:hidden;
-      background:
-        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.82)),
-        url('luffy-bg.jpg') center/cover no-repeat fixed;
-      position:relative;
+    html{
+      scroll-behavior:smooth;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,180,0,0.12), transparent 22%),
-        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.08), transparent 20%),
-        radial-gradient(circle at 50% 80%, rgba(255,120,0,0.10), transparent 18%);
-      pointer-events:none;
-      z-index:0;
-      animation:bgPulse 8s ease-in-out infinite;
-    }
+    body{
+  min-height:100vh;
+  color:white;
+  overflow-x:hidden;
+  position:relative;
+  background-color:#000;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+
+  background-image:
+    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.45)),
+    url('fundo.jpg');
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:cover;
+  background-color:#000;
+}
 
     @keyframes bgPulse{
       0%,100%{opacity:0.8; transform:scale(1);}
@@ -46,8 +50,7 @@
     .opening{
       position:fixed;
       inset:0;
-      background:
-        linear-gradient(180deg, rgba(0,0,0,0.95), rgba(15,8,0,0.95));
+      background:linear-gradient(180deg, rgba(0,0,0,0.95), rgba(15,8,0,0.95));
       z-index:9999;
       display:flex;
       align-items:center;
@@ -90,6 +93,7 @@
       opacity:0;
       transform:scale(0.9);
       animation:titlePop 1.3s ease 1s forwards;
+      max-width:900px;
     }
 
     .opening-sub{
@@ -234,7 +238,7 @@
     }
 
     .container{
-      width:min(1100px,92%);
+      width:min(1100px, 92%);
       margin:0 auto;
       padding:24px 0 60px;
       position:relative;
@@ -268,6 +272,7 @@
       backdrop-filter:blur(10px);
       font-size:.92rem;
       font-weight:700;
+      text-align:center;
     }
 
     .hero{
@@ -286,11 +291,12 @@
       display:flex;
       justify-content:center;
       align-items:center;
+      width:100%;
     }
 
     .typing{
       font-family:'Pacifico',cursive;
-      font-size:clamp(2.2rem,7vw,5rem);
+      font-size:clamp(2rem,7vw,5rem);
       color:#ffd54f;
       text-shadow:0 0 20px rgba(255,213,79,.35);
       border-right:4px solid #ffd54f;
@@ -316,6 +322,7 @@
       font-size:clamp(1.1rem,3vw,1.8rem);
       color:#fff3d1;
       font-weight:700;
+      padding:0 10px;
     }
 
     .hero-line{
@@ -323,6 +330,7 @@
       opacity:.95;
       letter-spacing:1px;
       font-size:1rem;
+      padding:0 10px;
     }
 
     .hero p{
@@ -330,12 +338,13 @@
       line-height:1.9;
       color:#f2e7cf;
       font-size:1.03rem;
+      padding:0 10px;
     }
 
     .photo{
       margin:18px auto 8px;
-      width:320px;
-      height:320px;
+      width:min(320px, 78vw);
+      aspect-ratio:1/1;
       border-radius:50%;
       overflow:hidden;
       border:4px solid #ffd700;
@@ -379,6 +388,7 @@
       flex-wrap:wrap;
       gap:14px;
       margin-top:6px;
+      width:100%;
     }
 
     .btn{
@@ -412,6 +422,12 @@
       font-size:.92rem;
       color:#f3e6c0;
       margin-top:2px;
+      text-align:center;
+      padding:0 10px;
+    }
+
+    audio{
+      width:min(100%, 340px);
     }
 
     section{
@@ -420,10 +436,11 @@
 
     .section-title{
       text-align:center;
-      font-size:2rem;
+      font-size:clamp(1.6rem, 4vw, 2rem);
       margin-bottom:10px;
       color:#ffd54f;
       text-shadow:0 4px 16px rgba(0,0,0,.25);
+      padding:0 10px;
     }
 
     .section-subtitle{
@@ -432,13 +449,15 @@
       margin:0 auto 28px;
       line-height:1.8;
       color:#f2e7cf;
+      padding:0 10px;
     }
 
     .gallery{
       display:grid;
-      grid-template-columns:repeat(4,1fr);
+      grid-template-columns:repeat(4, minmax(0,1fr));
       gap:22px;
       justify-items:center;
+      align-items:start;
     }
 
     .gallery-item{
@@ -447,10 +466,11 @@
       align-items:center;
       gap:12px;
       position:relative;
+      width:100%;
     }
 
     .gallery-photo{
-      width:180px;
+      width:min(180px, 100%);
       aspect-ratio:1/1;
       border-radius:50%;
       overflow:hidden;
@@ -464,7 +484,7 @@
       width:100%;
       height:100%;
       object-fit:cover;
-      object-position:center top;
+      object-position:center;
       display:block;
     }
 
@@ -476,13 +496,14 @@
       text-align:center;
       color:#fff;
       max-width:180px;
+      width:100%;
     }
 
     .gallery-item::after{
       content:"⚓";
       position:absolute;
       bottom:42px;
-      right:0;
+      right:10px;
       font-size:24px;
       opacity:.14;
     }
@@ -541,8 +562,8 @@
     }
 
     .gift-box{
-      width:180px;
-      height:180px;
+      width:min(180px, 45vw);
+      aspect-ratio:1/1;
       margin:0 auto 20px;
       background:linear-gradient(135deg,#d9a441,#b22222);
       border-radius:24px;
@@ -633,15 +654,19 @@
       font-size:.95rem;
     }
 
-    @media (max-width:900px){
+    @media (max-width: 1024px){
       .gallery{
-        grid-template-columns:repeat(2,1fr);
+        grid-template-columns:repeat(2, minmax(0,1fr));
       }
     }
 
-    @media (max-width:600px){
+    @media (max-width: 768px){
       body{
         background-attachment:scroll;
+      }
+
+      .container{
+        width:min(94%, 900px);
       }
 
       header{
@@ -649,8 +674,64 @@
         text-align:center;
       }
 
+      .hero{
+        min-height:auto;
+        padding-top:20px;
+      }
+
       .typing{
-        font-size:2.3rem;
+        font-size:2.4rem;
+      }
+
+      .subtitle{
+        font-size:1rem;
+      }
+
+      .hero-line{
+        font-size:.92rem;
+        line-height:1.7;
+      }
+
+      .hero p{
+        font-size:.98rem;
+      }
+
+      .message-box{
+        padding:22px 18px;
+        font-size:.98rem;
+      }
+
+      .gift-reveal{
+        padding:22px 18px;
+      }
+
+      .gift-reveal p{
+        font-size:.98rem;
+      }
+
+      .ship{font-size:48px;}
+      .map{font-size:52px;}
+      .hat{font-size:40px;}
+      .skull{font-size:34px;}
+    }
+
+    @media (max-width: 600px){
+      .opening-small{
+        font-size:.72rem;
+        letter-spacing:2px;
+      }
+
+      .opening-title{
+        font-size:1.8rem;
+      }
+
+      .opening-sub{
+        font-size:.92rem;
+        line-height:1.7;
+      }
+
+      .typing{
+        font-size:2rem;
       }
 
       @keyframes typing{
@@ -658,13 +739,8 @@
         to{width:10ch;}
       }
 
-      .subtitle{
-        font-size:1rem;
-      }
-
       .photo{
-        width:230px;
-        height:230px;
+        width:min(230px, 72vw);
       }
 
       .buttons{
@@ -674,7 +750,7 @@
 
       .btn{
         width:100%;
-        max-width:300px;
+        max-width:320px;
       }
 
       .gallery{
@@ -684,7 +760,6 @@
 
       .gallery-photo{
         width:140px;
-        aspect-ratio:1/1;
       }
 
       .gallery-caption{
@@ -692,30 +767,39 @@
         max-width:160px;
       }
 
-      .gift-box{
-        width:140px;
-        height:140px;
-      }
-
       .gift-reveal h2{
         font-size:1.8rem;
       }
 
-      .gift-reveal p{
-        font-size:.95rem;
+      .gift-box{
+        width:140px;
       }
 
       .ship{font-size:40px;}
       .map{font-size:45px;}
       .hat{font-size:38px;}
       .skull{font-size:32px;}
+    }
 
-      .opening-small{
-        font-size:.72rem;
+    @media (max-width: 380px){
+      .typing{
+        font-size:1.7rem;
       }
 
-      .opening-sub{
-        font-size:.92rem;
+      .subtitle{
+        font-size:.95rem;
+      }
+
+      .hero-line{
+        font-size:.84rem;
+      }
+
+      .section-title{
+        font-size:1.4rem;
+      }
+
+      .message-box{
+        border-radius:22px;
       }
     }
   </style>
@@ -769,7 +853,7 @@
 
     <section class="hero">
       <div class="typing-wrap">
-        <div class="typing">Maria Clara</div>
+        <div class="typing">Clarinha</div>
       </div>
 
       <div class="subtitle">você é meu tesouro ☠️</div>
@@ -789,9 +873,9 @@
         <button class="btn btn-secondary" onclick="tocarMusicaAnime()">Tocar música 🎵</button>
       </div>
 
-      <div class="music-note"> <strong></strong> Música do seu cantor favorito.</div>
+      <div class="music-note">Música do seu cantor favorito.</div>
 
-      <audio id="animeMusic" controls style="margin-top:10px; max-width:320px;">
+      <audio id="animeMusic" controls style="margin-top:10px;">
         <source src="musica-anime.mp3" type="audio/mpeg">
         Seu navegador não suporta áudio.
       </audio>
@@ -800,36 +884,36 @@
     <section>
       <h2 class="section-title">Coisas favoritas da Clarinha</h2>
       <p class="section-subtitle">
-        Luan santana   |   Capivara   |   São Paulo   |   Lírios
+        Luan Santana | Capivara | São Paulo | Lírios
       </p>
 
       <div class="gallery">
         <div class="gallery-item">
           <div class="gallery-photo">
-            <img src="luan.jpg" alt="Cantor favorito">
+            <img src="luan.jpg"> alt="Cantor favorito">
           </div>
-          <div class="gallery-caption">Cantor favorito 🎤</div>
+          <div class="gallery-caption">Cantor favorito</div>
         </div>
 
         <div class="gallery-item">
           <div class="gallery-photo">
-            <img src="animal.jpg" alt="animal preferido">
+            <img src="animal.jpg"> alt="Animal favorito">
           </div>
-          <div class="gallery-caption">Animal Preferido</div>
+          <div class="gallery-caption">Animal preferido</div>
         </div>
 
         <div class="gallery-item">
           <div class="gallery-photo">
             <img src="saopaulo.jpg" alt="Time do coração">
           </div>
-          <div class="gallery-caption">Time do coração ⚽</div>
+          <div class="gallery-caption">Time do coração</div>
         </div>
 
         <div class="gallery-item">
           <div class="gallery-photo">
-            <img src="lirios2.jpg" alt="Flor favorita">
+            <img src="lirios1.jpg" alt="Flor favorita">
           </div>
-          <div class="gallery-caption">Flor favorita 🌸</div>
+          <div class="gallery-caption">Flor favorita</div>
         </div>
       </div>
     </section>
@@ -902,3 +986,71 @@
   </script>
 </body>
 </html>
+<script>
+const telaCoracao = document.getElementById("telaCoracao");
+const canvas = document.getElementById("heartCanvas");
+const ctx = canvas.getContext("2d");
+
+let particles = [];
+let animationId;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+function heartPoint(t) {
+  const x = 16 * Math.pow(Math.sin(t), 3);
+  const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+  return { x, y };
+}
+
+function createParticles() {
+  particles = [];
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+
+  for (let i = 0; i < 700; i++) {
+    const t = Math.random() * Math.PI * 2;
+    const p = heartPoint(t);
+
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      tx: centerX + p.x * 15,
+      ty: centerY + p.y * 15,
+      speed: 0.02 + Math.random() * 0.03
+    });
+  }
+}
+
+function animate() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p => {
+    p.x += (p.tx - p.x) * p.speed;
+    p.y += (p.ty - p.y) * p.speed;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+    ctx.fillStyle = "white";
+    ctx.fill();
+  });
+
+  animationId = requestAnimationFrame(animate);
+}
+
+function abrirTelaCoracao(){
+  telaCoracao.style.display = "flex";
+  createParticles();
+  animate();
+}
+
+function fecharTelaCoracao(){
+  telaCoracao.style.display = "none";
+  cancelAnimationFrame(animationId);
+}
+</script>
