@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TP Viagens | Cadastro de Passageiros</title>
+  <style>
+    :root{
+      --rosa-principal:#d90452;
+      --rosa-escuro:#9b002f;
+      --rosa-claro:#ffe6ee;
+      --branco:#ffffff;
+      --cinza-fundo:#f6f2f4;
+      --cinza-borda:#f1b7c8;
+      --texto:#5c2030;
+      --verde-whats:#25D366;
+      --sombra:0 10px 25px rgba(155, 0, 47, 0.10);
+      --radius:18px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:linear-gradient(180deg, #fff8fb 0%, #f8eef2 100%);
+      color:var(--texto);
+      padding:20px;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:0 auto;
+    }
+
+    .topo{
+      background:var(--branco);
+      border:1px solid var(--cinza-borda);
+      border-radius:24px;
+      box-shadow:var(--sombra);
+      padding:24px;
+      margin-bottom:20px;
+      display:flex;
+      align-items:center;
+      gap:18px;
+      flex-wrap:wrap;
+    }
+
+    .logo-box{
+      width:95px;
+      height:95px;
+      border-radius:50%;
+      overflow:hidden;
+      background:#fff;
+      border:4px solid var(--rosa-claro);
+      box-shadow:0 8px 20px rgba(217, 4, 82, 0.15);
+      flex-shrink:0;
+    }
+
+    .logo-box img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .titulo-area h1{
+      color:var(--rosa-escuro);
+      font-size:30px;
+      margin-bottom:6px;
+    }
+
+    .titulo-area p{
+      color:#8b5161;
+      font-size:15px;
+    }
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:16px;
+      margin-bottom:20px;
+    }
+
+    .card{
+      background:var(--branco);
+      border:1px solid var(--cinza-borda);
+      border-radius:var(--radius);
+      padding:18px;
+      box-shadow:var(--sombra);
+    }
+
+    .card h3{
+      font-size:15px;
+      font-weight:normal;
+      color:#8b5161;
+      margin-bottom:10px;
+    }
+
+    .numero{
+      font-size:42px;
+      color:var(--rosa-escuro);
+      font-weight:bold;
+    }
+
+    .bloco{
+      background:var(--branco);
+      border:1px solid var(--cinza-borda);
+      border-radius:24px;
+      box-shadow:var(--sombra);
+      padding:20px;
+      margin-bottom:20px;
+    }
+
+    .bloco h2{
+      color:var(--rosa-escuro);
+      margin-bottom:18px;
+      font-size:30px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:14px;
+    }
+
+    .campo{
+      display:flex;
+      flex-direction:column;
+    }
+
+    .campo label{
+      margin-bottom:6px;
+      color:var(--rosa-escuro);
+      font-size:14px;
+      font-weight:bold;
+    }
+
+    .campo input,
+    .campo select{
+      height:48px;
+      padding:12px 14px;
+      border:1px solid var(--cinza-borda);
+      border-radius:12px;
+      outline:none;
+      background:#fffafb;
+      font-size:15px;
+      color:var(--texto);
+    }
+
+    .campo input:focus,
+    .campo select:focus{
+      border-color:var(--rosa-principal);
+      box-shadow:0 0 0 3px rgba(217, 4, 82, 0.10);
+    }
+
+    .acoes-form{
+      margin-top:16px;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:14px 18px;
+      font-weight:bold;
+      transition:0.2s ease;
+      font-size:15px;
+    }
+
+    button:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-primario{
+      background:linear-gradient(90deg, var(--rosa-principal), var(--rosa-escuro));
+      color:white;
+      box-shadow:0 8px 18px rgba(217, 4, 82, 0.25);
+    }
+
+    .btn-whats{
+      background:var(--verde-whats);
+      color:white;
+    }
+
+    .btn-secundario{
+      background:#f4d9e2;
+      color:var(--rosa-escuro);
+    }
+
+    .btn-perigo{
+      background:#8f002b;
+      color:#fff;
+    }
+
+    .lista-vazia{
+      border:2px dashed var(--cinza-borda);
+      border-radius:16px;
+      padding:28px;
+      text-align:center;
+      color:#9b6a77;
+      background:#fffafb;
+    }
+
+    .tabela-wrap{
+      overflow-x:auto;
+      margin-top:10px;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:750px;
+    }
+
+    thead th{
+      background:linear-gradient(90deg, var(--rosa-escuro), var(--rosa-principal));
+      color:white;
+      padding:14px;
+      text-align:left;
+      font-size:14px;
+    }
+
+    tbody td{
+      border-bottom:1px solid #f2d7e0;
+      padding:14px 12px;
+      background:#fff;
+      font-size:14px;
+    }
+
+    .status{
+      display:inline-block;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:bold;
+    }
+
+    .confirmado{
+      background:#ffe7ef;
+      color:#b00039;
+    }
+
+    .embarcado{
+      background:#e8fff0;
+      color:#0d8a43;
+    }
+
+    .linha-acoes{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .btn-mini{
+      padding:8px 12px;
+      font-size:13px;
+      border-radius:10px;
+    }
+
+    .btn-excluir{
+      background:#ffe1e1;
+      color:#a00000;
+    }
+
+    .rodape-info{
+      margin-top:12px;
+      font-size:13px;
+      color:#91606f;
+    }
+
+    @media (max-width: 900px){
+      .cards{
+        grid-template-columns:1fr;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+
+      .topo{
+        flex-direction:column;
+        text-align:center;
+      }
+
+      .titulo-area h1{
+        font-size:24px;
+      }
+
+      .bloco h2{
+        font-size:24px;
+      }
+    }
+
+    @media print{
+      body{
+        background:white;
+        padding:0;
+      }
+
+      .topo,
+      .acoes-form,
+      .linha-acoes,
+      .col-acoes,
+      .rodape-info{
+        display:none !important;
+      }
+
+      .bloco, .card{
+        box-shadow:none;
+        border:1px solid #ccc;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="topo">
+      <div class="logo-box">
+        <img src="logo.png" alt="Logo TP Viagens">
+      </div>
+      <div class="titulo-area">
+        <h1>TP Viagens</h1>
+        <p>Sistema de cadastro e controle de passageiros</p>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Total de passageiros</h3>
+        <div class="numero" id="totalPassageiros">0</div>
+      </div>
+      <div class="card">
+        <h3>Confirmados</h3>
+        <div class="numero" id="totalConfirmados">0</div>
+      </div>
+      <div class="card">
+        <h3>Embarcados</h3>
+        <div class="numero" id="totalEmbarcados">0</div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <h2>Novo cadastro</h2>
+
+      <div class="form-grid">
+        <div class="campo">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" placeholder="Digite o nome do passageiro">
+        </div>
+
+        <div class="campo">
+          <label for="rg">RG</label>
+          <input type="text" id="rg" placeholder="Digite o RG">
+        </div>
+
+        <div class="campo">
+          <label for="telefone">Telefone</label>
+          <input type="text" id="telefone" placeholder="Digite o telefone">
+        </div>
+
+        <div class="campo">
+          <label for="status">Status</label>
+          <select id="status">
+            <option value="Confirmado">Confirmado</option>
+            <option value="Embarcado">Embarcado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="acoes-form">
+        <button class="btn-primario" onclick="salvarPassageiro()">Salvar cadastro</button>
+        <button class="btn-secundario" onclick="limparCampos()">Limpar campos</button>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <h2>Lista de passageiros</h2>
+
+      <div id="areaLista"></div>
+
+      <div class="linha-acoes">
+        <button class="btn-whats" onclick="enviarWhatsApp()">Enviar lista no WhatsApp</button>
+        <button class="btn-primario" onclick="baixarExcel()">Baixar lista no Excel</button>
+        <button class="btn-secundario" onclick="window.print()">Imprimir lista</button>
+        <button class="btn-perigo" onclick="apagarTudo()">Apagar todos os registros</button>
+      </div>
+
+      <div class="rodape-info">
+        Os dados ficam salvos no navegador usando armazenamento local.
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const CHAVE_STORAGE = "tp_viagens_passageiros";
+    const NUMERO_WHATSAPP = "5516992076608"; // troque aqui se quiser
+
+    let passageiros = [];
+
+    function carregarDados() {
+      const dadosSalvos = localStorage.getItem(CHAVE_STORAGE);
+      if (dadosSalvos) {
+        passageiros = JSON.parse(dadosSalvos);
+      } else {
+        passageiros = [];
+      }
+      renderizarTudo();
+    }
+
+    function salvarNoStorage() {
+      localStorage.setItem(CHAVE_STORAGE, JSON.stringify(passageiros));
+    }
+
+    function salvarPassageiro() {
+      const nome = document.getElementById("nome").value.trim();
+      const rg = document.getElementById("rg").value.trim();
+      const telefone = document.getElementById("telefone").value.trim();
+      const status = document.getElementById("status").value;
+
+      if (!nome || !rg || !telefone) {
+        alert("Preencha nome, RG e telefone.");
+        return;
+      }
+
+      const novoPassageiro = {
+        id: Date.now(),
+        nome,
+        rg,
+        telefone,
+        status
+      };
+
+      passageiros.push(novoPassageiro);
+      salvarNoStorage();
+      renderizarTudo();
+      limparCampos();
+    }
+
+    function limparCampos() {
+      document.getElementById("nome").value = "";
+      document.getElementById("rg").value = "";
+      document.getElementById("telefone").value = "";
+      document.getElementById("status").value = "Confirmado";
+      document.getElementById("nome").focus();
+    }
+
+    function excluirPassageiro(id) {
+      passageiros = passageiros.filter(p => p.id !== id);
+      salvarNoStorage();
+      renderizarTudo();
+    }
+
+    function apagarTudo() {
+      if (!confirm("Tem certeza que deseja apagar todos os registros?")) return;
+      passageiros = [];
+      salvarNoStorage();
+      renderizarTudo();
+    }
+
+    function atualizarCards() {
+      const total = passageiros.length;
+      const confirmados = passageiros.filter(p => p.status === "Confirmado").length;
+      const embarcados = passageiros.filter(p => p.status === "Embarcado").length;
+
+      document.getElementById("totalPassageiros").textContent = total;
+      document.getElementById("totalConfirmados").textContent = confirmados;
+      document.getElementById("totalEmbarcados").textContent = embarcados;
+    }
+
+    function renderizarLista() {
+      const areaLista = document.getElementById("areaLista");
+
+      if (passageiros.length === 0) {
+        areaLista.innerHTML = `
+          <div class="lista-vazia">
+            Nenhum passageiro cadastrado no sistema.
+          </div>
+        `;
+        return;
+      }
+
+      let html = `
+        <div class="tabela-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>RG</th>
+                <th>Telefone</th>
+                <th>Status</th>
+                <th class="col-acoes">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+      `;
+
+      passageiros.forEach((p, index) => {
+        html += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${p.nome}</td>
+            <td>${p.rg}</td>
+            <td>${p.telefone}</td>
+            <td>
+              <span class="status ${p.status === "Confirmado" ? "confirmado" : "embarcado"}">
+                ${p.status}
+              </span>
+            </td>
+            <td class="col-acoes">
+              <button class="btn-mini btn-excluir" onclick="excluirPassageiro(${p.id})">Excluir</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      html += `
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      areaLista.innerHTML = html;
+    }
+
+    function renderizarTudo() {
+      atualizarCards();
+      renderizarLista();
+    }
+
+    function baixarExcel() {
+      if (passageiros.length === 0) {
+        alert("Não há passageiros cadastrados.");
+        return;
+      }
+
+      let csv = "Nº;Nome;RG;Telefone;Status\n";
+
+      passageiros.forEach((p, index) => {
+        csv += `${index + 1};${p.nome};${p.rg};${p.telefone};${p.status}\n`;
+      });
+
+      const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+
+      link.setAttribute("href", url);
+      link.setAttribute("download", "lista_passageiros_tp_viagens.csv");
+      link.style.visibility = "hidden";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function gerarTextoLista() {
+      if (passageiros.length === 0) {
+        return "Lista de passageiros vazia.";
+      }
+
+      let texto = "TP VIAGENS%0A";
+      texto += "Lista de passageiros:%0A%0A";
+
+      passageiros.forEach((p, index) => {
+        texto += `${index + 1}. ${p.nome} | RG: ${p.rg} | Tel: ${p.telefone} | Status: ${p.status}%0A`;
+      });
+
+      texto += `%0A`;
+      texto += `Total: ${passageiros.length}%0A`;
+      texto += `Confirmados: ${passageiros.filter(p => p.status === "Confirmado").length}%0A`;
+      texto += `Embarcados: ${passageiros.filter(p => p.status === "Embarcado").length}`;
+
+      return texto;
+    }
+
+    function enviarWhatsApp() {
+      if (passageiros.length === 0) {
+        alert("Não há passageiros cadastrados para enviar.");
+        return;
+      }
+
+      const mensagem = gerarTextoLista();
+      const url = `https://wa.me/${NUMERO_WHATSAPP}?text=${mensagem}`;
+      window.open(url, "_blank");
+    }
+
+    carregarDados();
+  </script>
+</body>
+</html>
